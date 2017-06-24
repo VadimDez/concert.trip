@@ -14,7 +14,8 @@ let UserSchema = new mongoose.Schema({
   password: String,
   spotifyId: String,
   provider: String,
-  salt: String
+  salt: String,
+  spotifyAccessToken: String
 });
 
 UserSchema
