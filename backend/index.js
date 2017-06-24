@@ -123,8 +123,11 @@ server.listen(PORT, () => {
   console.log(`Listening on port ${ PORT }`);
 });
 
-app.get('/', ensureAuthenticated, (req, res) => {
-  console.log(req.isAuthenticated());
+app.get('/', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.status(401).end();
+    return;
+  }
   res.json({test: req.isAuthenticated()}).status(200).end();
 });
 
