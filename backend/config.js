@@ -7,6 +7,9 @@ const user = 'admin';
 const password = 'admin1';
 
 module.exports = {
+  secrets: {
+    session: 'secret'
+  },
   spotify: {
     CLIENT_ID: 'aceb81be23b746b9a2f911d2808cc295',
     CLIENT_SECRET: '797405dc59964a2e928821112e488ca1'
