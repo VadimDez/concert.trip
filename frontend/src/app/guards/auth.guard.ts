@@ -11,9 +11,9 @@ export class SpotifyAuthGuard implements CanActivate {
   }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (state.root.queryParams.token) {
-      this.cookieService.put('token', state.root.queryParams.token);
-    }
+    // if (state.root.queryParams.token) {
+    //   this.cookieService.put('token', state.root.queryParams.token);
+    // }
 
     return true;
   }
