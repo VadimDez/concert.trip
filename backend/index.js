@@ -32,7 +32,7 @@ mongoose.connection.on('error', err => {
 require('./express')(app);
 
 app.get('/auth/spotify',
-  passport.authenticate('spotify', {scope: ['user-read-email', 'user-read-private'], showDialog: true}),
+  passport.authenticate('spotify', {scope: ['user-read-email', 'user-read-private', 'user-top-read'], showDialog: true}),
   function(req, res){
     res.status(400).end();
   });
