@@ -70,8 +70,15 @@ module.exports = (app) => {
       callbackURL: `http://localhost:${ 3000 }/auth/spotify/callback`
     },
     (accessToken, refreshToken, profile, done) => {
-      process.nextTick(function () {
-        return done(null, profile);
+      User.findOrCreate({ spotifyId: profile.id }, function (err, user) {
+        user.spotifyAccessToken = accessToken;
+        user.saveAsync()
+          .then(err => {
+            return done(null, user);
+          })
+          .catch(err => {
+            return done(err, user);
+          });
       });
     })
   );

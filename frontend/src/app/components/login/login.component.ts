@@ -11,26 +11,25 @@ import { contentHeaders } from '../common/headers';
 })
 export class LoginComponent {
   constructor(public router: Router, public http: Http) {
-    console.log('asd');
-    this.http.get('http://localhost:3000/')
+    this.http.get('http://localhost:3000/users/me', { withCredentials: true })
       .subscribe(() => {
 
       });
   }
 
   login(event, username, password) {
-    event.preventDefault();
-    let body = JSON.stringify({ username, password });
-    this.http.post('http://localhost:3000/auth/spotify/callback', body, { headers: contentHeaders })
-      .subscribe(
-        response => {
-          localStorage.setItem('id_token', response.json().id_token);
-        //   this.router.navigate(['home']);
-        },
-        error => {
-          alert(error.text());
-          console.log(error.text());
-        }
-      );
+    // event.preventDefault();
+    // let body = JSON.stringify({ username, password });
+    // this.http.post('http://localhost:3000/auth/spotify/callback', body, { headers: contentHeaders })
+    //   .subscribe(
+    //     response => {
+    //       localStorage.setItem('id_token', response.json().id_token);
+    //     //   this.router.navigate(['home']);
+    //     },
+    //     error => {
+    //       alert(error.text());
+    //       console.log(error.text());
+    //     }
+    //   );
   }
 }
