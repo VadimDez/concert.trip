@@ -3,6 +3,7 @@
  */
 
 const mongoose = require('mongoose');
+const findOrCreate = require('mongoose-findorcreate');
 
 let UserSchema = new mongoose.Schema({
   name: String,
@@ -11,7 +12,7 @@ let UserSchema = new mongoose.Schema({
     lowercase: true
   },
   password: String,
-  spotify: String,
+  spotifyId: String,
   provider: String,
   salt: String
 });
@@ -193,5 +194,7 @@ UserSchema.methods = {
     });
   }
 };
+
+UserSchema.plugin(findOrCreate);
 
 module.exports = mongoose.model('User', UserSchema);

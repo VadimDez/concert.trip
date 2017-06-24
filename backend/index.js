@@ -8,6 +8,7 @@ const server = require('http').Server(app);
 const SpotifyWebApi = require('spotify-web-api-node');
 const mongoose = require('mongoose');
 const Promise = require('bluebird');
+mongoose.Promise = Promise;
 const chalk = require('chalk');
 const passport = require('passport');
 const passportLocal = require('passport-local');
@@ -22,7 +23,7 @@ const spotifyApi = new SpotifyWebApi({
   clientSecret : config.CLIENT_SECRET,
   redirectUri : `http://localhost:${ PORT }/callback`
 });
-Promise.promisifyAll(mongoose);
+// Promise.promisifyAll(mongoose);
 mongoose.connect(config.MONGODB);
 mongoose.connection.on('error', err => {
   console.log(chalk.red('MongoDB error: '));
@@ -78,16 +79,20 @@ app.post('/auth', (req, res, next) => {
 });
 
 app.post('/users', (req, res) => {
-  var newUser = new User(req.body);
+  const newUser = new User(req.body);
   newUser.provider = 'local';
+
   newUser.saveAsync()
-    .spread(function(user) {
+    .spread(user => {
+      console.log('user:');
+      console.log(user);
       var token = jwt.sign({ _id: user._id }, config.secrets.session, {
         expiresIn: 60 * 60 * 5
       });
       res.json({ token });
     })
     .catch((res, statusCode) => {
+      console.log('error');
       statusCode = statusCode || 422;
       return err => {
         res.status(statusCode).json(err);
@@ -95,11 +100,24 @@ app.post('/users', (req, res) => {
     });
 });
 
+app.get('/auth/spotify',
+  passport.authenticate('spotify', {scope: ['user-read-email', 'user-read-private'], showDialog: true}),
+  function(req, res){
+    res.status(400).end();
+  });
+
+app.get('/auth/spotify/callback',
+  passport.authenticate('spotify', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
+
 
 server.listen(PORT, () => {
   console.log(`Listening on port ${ PORT }`);
 });
 
 app.get('/', (req, res) => {
-  res.status(200).end();
+  res.json({test: 'ok'}).status(200).end();
 });
