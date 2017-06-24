@@ -9,7 +9,7 @@ import { contentHeaders } from '../common/headers';
   templateUrl: './login.component.html',
   styleUrls: [ './login.component.css' ]
 })
-export class Login {
+export class LoginComponent {
   constructor(public router: Router, public http: Http) {
     console.log('asd');
     this.http.get('http://localhost:3000/')
