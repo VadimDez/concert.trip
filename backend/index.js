@@ -19,8 +19,8 @@ const authService = require('./auth.service');
 const config = require('./config');
 const PORT = 3000;
 const spotifyApi = new SpotifyWebApi({
-  clientId : config.CLIENT_ID,
-  clientSecret : config.CLIENT_SECRET,
+  clientId : config.spotify.CLIENT_ID,
+  clientSecret : config.spotify.CLIENT_SECRET,
   redirectUri : `http://localhost:${ PORT }/callback`
 });
 // Promise.promisifyAll(mongoose);
