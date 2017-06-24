@@ -108,10 +108,8 @@ app.get('/auth/spotify',
 
 app.get('/auth/spotify/callback',
   passport.authenticate('spotify', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  });
+  authService.setTokenCookie
+);
 
 
 server.listen(PORT, () => {
@@ -119,5 +117,8 @@ server.listen(PORT, () => {
 });
 
 app.get('/', (req, res) => {
+  if (req.user) {
+    console.log('has user');
+  }
   res.json({test: 'ok'}).status(200).end();
 });
