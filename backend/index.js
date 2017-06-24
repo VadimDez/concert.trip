@@ -43,9 +43,12 @@ app.get('/auth/spotify/callback',
   authService.setTokenCookie
 );
 
-app.get('/spotify/topArtists', ensureAuthenticated, (req, res) => {
+app.get('/api/getOffers', (req, res) => {
+  spotifyApi.setAccessToken(req.user.spotifyAccessToken);
   spotifyApi.getMyTopArtists().then(function(data) {
-    console.log('topArtists');
+    data.body.items.forEach((item) => {
+      console.log(item.name);
+    });
   }, function(err) {
     console.error(err);
   });
