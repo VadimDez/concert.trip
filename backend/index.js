@@ -42,12 +42,12 @@ app.get('/auth/spotify/callback',
   authService.setTokenCookie
 );
 
-app.get('/spotify/topArtists', (req, res) => {
-    spotifyApi.getMyTopArtists().then(function(data) {
-      console.log('topArtists');
-    }, function(err) {
-      console.error(err);
-    });
+app.get('/spotify/topArtists', ensureAuthenticated, (req, res) => {
+  spotifyApi.getMyTopArtists().then(function(data) {
+    console.log('topArtists');
+  }, function(err) {
+    console.error(err);
+  });
 });
 
 server.listen(PORT, () => {
@@ -60,9 +60,8 @@ app.get('/users/me', (req, res) => {
 });
 
 function ensureAuthenticated(req, res, next) {
-  console.log(req.user);
   if (req.isAuthenticated()) {
     return next();
   }
-  res.redirect('/auth/spotify');
+  res.status(401).end();
 }
