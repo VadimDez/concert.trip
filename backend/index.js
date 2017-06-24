@@ -63,9 +63,8 @@ app.get('/users/me', (req, res) => {
 });
 
 function ensureAuthenticated(req, res, next) {
-  console.log(req.user);
   if (req.isAuthenticated()) {
     return next();
   }
-  res.redirect('/auth/spotify');
+  res.status(401).end();
 }
