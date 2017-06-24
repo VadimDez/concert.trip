@@ -1,16 +1,29 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
-import { AppComponent } from './app.component';
+import { routes } from './app.routes';
+import { AuthGuard } from './components/common/auth.guard';
+
+// Local components
+import { Login } from './components/login/login.component'
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    Login
   ],
   imports: [
-    BrowserModule
+    HttpModule, BrowserModule, FormsModule,
+    RouterModule.forRoot(routes, {
+      useHash: true
+})
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    AuthGuard,
+  ],
+  bootstrap: [Login]
 })
 export class AppModule { }
