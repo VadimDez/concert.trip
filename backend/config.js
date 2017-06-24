@@ -7,6 +7,7 @@ const user = 'admin';
 const password = 'admin1';
 
 module.exports = {
+  PORT: 3000,
   secrets: {
     session: 'secret'
   },
