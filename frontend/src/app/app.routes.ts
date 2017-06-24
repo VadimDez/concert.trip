@@ -1,10 +1,9 @@
 import { Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import { AuthGuard } from './components/common/auth.guard';
 import { SpotifyAuthGuard } from './guards/auth.guard';
+import { Login } from './components/login/login.component';
 
 export const routes: Routes = [
-  { path: '',       component: AppComponent, canActivate: [SpotifyAuthGuard] },
-//   { path: 'home',   component: Home, canActivate: [AuthGuard] },
-  { path: '**',     component: AppComponent, canActivate: [SpotifyAuthGuard] },
+  { path: '',       component: Login, canActivate: [SpotifyAuthGuard] },
+  { path: 'home',   component: AppComponent, canActivate: [SpotifyAuthGuard]  },
 ];
