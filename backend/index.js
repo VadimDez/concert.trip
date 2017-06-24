@@ -111,6 +111,13 @@ app.get('/auth/spotify/callback',
   authService.setTokenCookie
 );
 
+app.get('/spotify/topArtists', (req, res) => {
+    spotifyApi.getMyTopArtists().then(function(data) {
+      console.log('topArtists');
+    }, function(err) {
+      console.error(err);
+    });
+});
 
 server.listen(PORT, () => {
   console.log(`Listening on port ${ PORT }`);
