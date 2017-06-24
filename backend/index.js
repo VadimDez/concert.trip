@@ -117,8 +117,6 @@ server.listen(PORT, () => {
 });
 
 app.get('/', (req, res) => {
-  if (req.user) {
-    console.log('has user');
-  }
+  console.log(req.isAuthenticated());
   res.json({test: 'ok'}).status(200).end();
 });

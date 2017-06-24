@@ -11,6 +11,11 @@ import { contentHeaders } from '../common/headers';
 })
 export class Login {
   constructor(public router: Router, public http: Http) {
+    console.log('asd');
+    this.http.get('http://localhost:3000/')
+      .subscribe(() => {
+
+      });
   }
 
   login(event, username, password) {
