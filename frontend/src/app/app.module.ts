@@ -18,6 +18,7 @@ import { HeaderBarComponent } from './header-bar/header-bar.component';
 import { SpotifyAuthGuard } from './guards/auth.guard';
 import { MainComponent } from './main/main.component';
 import { CookieModule } from 'ngx-cookie';
+import { PackageDetailComponent } from './package-detail/package-detail.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { CookieModule } from 'ngx-cookie';
     BudgetWidgetComponent,
     ConcertPackageComponent,
     HeaderBarComponent,
-    MainComponent
+    MainComponent,
+    PackageDetailComponent
   ],
   imports: [
     HttpModule, BrowserModule, FormsModule,
