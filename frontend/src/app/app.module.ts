@@ -17,6 +17,7 @@ import { ConcertPackageComponent } from './concert-package/concert-package.compo
 import { HeaderBarComponent } from './header-bar/header-bar.component';
 import { SpotifyAuthGuard } from './guards/auth.guard';
 import { MainComponent } from './main/main.component';
+import { CookieModule } from 'ngx-cookie';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { MainComponent } from './main/main.component';
     HttpModule, BrowserModule, FormsModule,
     RouterModule.forRoot(routes, {
       useHash: false
-})
+    }),
+    CookieModule.forRoot()
   ],
   providers: [
     AuthGuard,
