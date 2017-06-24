@@ -8,22 +8,39 @@ import { routes } from './app.routes';
 import { AuthGuard } from './components/common/auth.guard';
 
 // Local components
-import { Login } from './components/login/login.component'
-
+import { LoginComponent } from './components/login/login.component'
+import { AppComponent } from './app.component';
+import { ListComponent } from './list/list.component';
+import { ArtistListComponent } from './artist-list/artist-list.component';
+import { BudgetWidgetComponent } from './budget-widget/budget-widget.component';
+import { ConcertPackageComponent } from './concert-package/concert-package.component';
+import { HeaderBarComponent } from './header-bar/header-bar.component';
+import { SpotifyAuthGuard } from './guards/auth.guard';
+import { MainComponent } from './main/main.component';
+import { CookieModule } from 'ngx-cookie';
 
 @NgModule({
   declarations: [
-    Login
+    LoginComponent,
+    AppComponent,
+    ListComponent,
+    ArtistListComponent,
+    BudgetWidgetComponent,
+    ConcertPackageComponent,
+    HeaderBarComponent,
+    MainComponent
   ],
   imports: [
     HttpModule, BrowserModule, FormsModule,
     RouterModule.forRoot(routes, {
-      useHash: true
-})
+      useHash: false
+    }),
+    CookieModule.forRoot()
   ],
   providers: [
     AuthGuard,
+    SpotifyAuthGuard
   ],
-  bootstrap: [Login]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

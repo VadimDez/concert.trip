@@ -1,10 +1,28 @@
 import { Routes } from '@angular/router';
-import { Login } from './components/login/login.component';
-import { AuthGuard } from './components/common/auth.guard';
+import { AppComponent } from './app.component';
+import { SpotifyAuthGuard } from './guards/auth.guard';
+import { LoginComponent } from './components/login/login.component';
+import { MainComponent } from './main/main.component';
 
 export const routes: Routes = [
-  { path: '',       component: Login },
-  { path: 'login', component: Login },
-//   { path: 'home',   component: Home, canActivate: [AuthGuard] },
-  { path: '**',     component: Login },
+  {
+    path: '',
+    component: AppComponent,
+    canActivate: [SpotifyAuthGuard],
+    children: [
+      {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full'
+      },
+      {
+        path: 'login',
+        component: LoginComponent
+      },
+      {
+        path: 'main',
+        component: MainComponent
+      },
+    ]
+  },
 ];

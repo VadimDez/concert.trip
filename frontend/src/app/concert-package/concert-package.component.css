@@ -1,0 +1,93 @@
+.concert-package-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin-top: 40px;
+  color: #F1F2EB;
+  background: #393D3F;
+}
+
+.concert-package-event-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.concert-package-artist-image img {
+  width: 142px;
+  height: 142px;
+}
+
+.concert-package-event-details {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.concert-package-detail-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.concert-package-date-detail-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.concert-package-event-date {
+  font-size: 18px;
+}
+
+.concert-package-event-time {
+  font-size: 14px;
+}
+
+.concert-package-total-price {
+  color: #ED6256;
+  font-size: 24px;
+}
+
+.concert-package-artist-name {
+  font-size: 24px;
+}
+
+.concert-package-venue-info {
+  font-size: 14px;
+}
+
+.concert-package-event-city {
+  font-size: 14px;
+}
+
+.concert-package-hotel-container, .concert-package-flight-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+}
+
+.hotel-icon {
+  background: url('../../assets/icons/hotel-icon.svg');
+  background-size: 32.82px 20px;
+  width: 32.82px;
+  height: 20px;
+}
+
+.flight-icon {
+  background: url('../../assets/icons/flight-icon.svg');
+  background-size: 33.33px 20px;
+  width: 33.33px;
+  height: 20px;
+}
+
+.concert-package-hotel-name, .concert-package-flight-info {
+  font-size: 14px;
+}
+
+.book-now-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
