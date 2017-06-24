@@ -8,6 +8,8 @@ const SpotifyWebApi = require('spotify-web-api-node');
 const chalk = require('chalk');
 const request = require('request');
 
+const Booking = require('./booking-com');
+const getTransport = require('./transportation');
 const config = require('./config');
 const authService = require('./auth.service');
 const spotifyApi = new SpotifyWebApi({
@@ -16,6 +18,7 @@ const spotifyApi = new SpotifyWebApi({
   redirectUri : `http://localhost:${ config.PORT }/callback`
 });
 
+let booking = new Booking('b_munich_hackers17', 'f7u@9prYLjCZq,w]2Gd[');
 let router = new Router();
 
 router.get('/auth/spotify',
@@ -43,48 +46,7 @@ router.get('/api/getOffers', (req, res) => {
   });
 });
 
-/**
- * Get transport prices, routes, etc...
- *
- * @param originCity - Origin display name
- * @param originPosition - Origin latitude,longitude (comma separated)
- * @param destinationCity - Destination display name
- * @param destinationPosition - Destination latitude,longitude (comma separated)
- * @param currency
- */
-function getTransport(originCity, originPosition, destinationCity, destinationPosition, currency) {
-  currency = currency || 'EUR';
-  let url = `https://rome2rio12.p.mashape.com/Search?currency=${ currency }&dKind=City&oKind=City`;
-  const args = ['oName', 'oPos', 'dName', 'dPos'];
-  originCity = encodeURIComponent(originCity) || null;
-  destinationCity = encodeURIComponent(destinationCity) || null;
 
-  // add query params dynamically
-  args.forEach((value, index) => {
-    if (arguments[index]) {
-      url += `&${ value }=${ arguments[index] }`;
-    }
-  });
-
-  const options = {
-    url: url,
-    headers: {
-      'X-Mashape-Key': 'popMmKAzdQmshoMEn4fhbUmGcGxDp1SbSidjsn3U3dEDruOfp1',
-      'Accept': 'application/json'
-    }
-  };
-
-  return new Promise((resolve, reject) => {
-    request(options, (error, response, body) => {
-      if (!error && response.statusCode === 200) {
-        const json = JSON.parse(body);
-        resolve(json);
-      } else {
-        reject(error);
-      }
-    });
-  });
-}
 
 router.get('/transport', (req, res) => {
   getTransport('Zurich', null, 'Munich')
@@ -92,6 +54,21 @@ router.get('/transport', (req, res) => {
       res.status(200).json(response).end();
     })
     .catch(err => {
+      console.log(chalk.red(err));
+      res.status(400).end();
+    });
+});
+
+router.get('/asd', (req, res) => {
+  // booking.autocomplete('New York')
+  // booking.getCities('Munich')
+  // booking.getHotels('-3875389')
+  // booking.getHotels('20088325')
+  booking.getHotelAvailabilityV2(null, null, '20088325')
+    .then((data) => {
+      res.status(200).json(data).end();
+    })
+    .catch((err) => {
       console.log(chalk.red(err));
       res.status(400).end();
     });
