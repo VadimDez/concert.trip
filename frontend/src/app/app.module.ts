@@ -8,7 +8,7 @@ import { routes } from './app.routes';
 import { AuthGuard } from './components/common/auth.guard';
 
 // Local components
-//import { Login } from './components/login/login.component'
+import { Login } from './components/login/login.component'
 import { AppComponent } from './app.component';
 import { ListComponent } from './list/list.component';
 import { ArtistListComponent } from './artist-list/artist-list.component';
@@ -18,7 +18,7 @@ import { HeaderBarComponent } from './header-bar/header-bar.component';
 
 @NgModule({
   declarations: [
-    //Login,
+    Login,
     AppComponent,
     ListComponent,
     ArtistListComponent,
@@ -35,6 +35,6 @@ import { HeaderBarComponent } from './header-bar/header-bar.component';
   providers: [
     AuthGuard,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [Login]
 })
 export class AppModule { }
