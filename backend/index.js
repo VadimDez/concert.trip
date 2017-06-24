@@ -16,10 +16,13 @@ const passport = require('passport');
 const User = require('./models/user');
 const authService = require('./auth.service');
 const config = require('./config');
+const eventful = require('./eventful');
+eventfulApi = new eventful.Eventful(config.eventful.APP_KEY);
+
 const PORT = 3000;
 const spotifyApi = new SpotifyWebApi({
-  clientId : config.CLIENT_ID,
-  clientSecret : config.CLIENT_SECRET,
+  clientId : config.spotify.CLIENT_ID,
+  clientSecret : config.spotify.CLIENT_SECRET,
   redirectUri : `http://localhost:${ PORT }/callback`
 });
 // Promise.promisifyAll(mongoose);
@@ -44,9 +47,39 @@ app.get('/auth/spotify/callback',
 
 app.get('/api/getOffers', (req, res) => {
   spotifyApi.setAccessToken(req.user.spotifyAccessToken);
+
   spotifyApi.getMyTopArtists().then(function(data) {
     data.body.items.forEach((item) => {
-      console.log(item.name);
+      eventfulApi.search_performers({ keywords: item.name }, function (error, response, body) {
+        Promise.resolve(JSON.parse(body))
+          .then(function (data) {
+            if (data.total_items != 0 && data.performers && data.performers.performer) {
+              let artist = null;
+              if (data.total_items == 1) {
+                artist = data.performers.performer;
+              } else {
+                artist = data.performers.performer[0];
+              }
+              eventfulApi.get_performer_events({ id: artist.id }, function (error, response, body) {
+                Promise.resolve(JSON.parse(body))
+                  .then(function (data) {
+                    if (data.event_count != 0) {
+                      data.event.forEach((item) => {
+                        let artist_event = item;
+                        eventfulApi.get_event({ id: artist_event.id }, function (error, response, body) {
+                          Promise.resolve(JSON.parse(body))
+                            .then(function (data) {
+                              if (data.price)
+                                console.log(data.title + ' loc: ' + data.address + '(' + data.city + ', ' + data.country + ') price: ' + data.price);
+                            });
+                        });
+                      });
+                    }
+                  })
+              });
+            }
+          });
+      })
     });
   }, function(err) {
     console.error(err);
