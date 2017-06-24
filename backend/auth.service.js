@@ -21,5 +21,5 @@ module.exports.setTokenCookie = (req, res) => {
 
   var token = signToken(req.user._id);
   res.cookie('token', token);
-  res.redirect('/');
+  res.redirect('http://localhost:4200/');
 };
