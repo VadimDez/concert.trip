@@ -15,6 +15,7 @@ import { ArtistListComponent } from './artist-list/artist-list.component';
 import { BudgetWidgetComponent } from './budget-widget/budget-widget.component';
 import { ConcertPackageComponent } from './concert-package/concert-package.component';
 import { HeaderBarComponent } from './header-bar/header-bar.component';
+import { SpotifyAuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -29,11 +30,12 @@ import { HeaderBarComponent } from './header-bar/header-bar.component';
   imports: [
     HttpModule, BrowserModule, FormsModule,
     RouterModule.forRoot(routes, {
-      useHash: true
+      useHash: false
 })
   ],
   providers: [
     AuthGuard,
+    SpotifyAuthGuard
   ],
   bootstrap: [AppComponent]
 })

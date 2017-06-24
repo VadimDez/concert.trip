@@ -19,7 +19,5 @@ module.exports.setTokenCookie = (req, res) => {
     return res.status(404).send('It looks like you aren\'t logged in, please try again.');
   }
 
-  var token = signToken(req.user._id);
-  res.cookie('token', token);
-  res.redirect('http://localhost:4200/');
+  res.redirect(`http://localhost:4200?token=${ signToken(req.user._id) }`);
 };
