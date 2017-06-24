@@ -8,12 +8,23 @@ import { routes } from './app.routes';
 import { AuthGuard } from './components/common/auth.guard';
 
 // Local components
-import { Login } from './components/login/login.component'
-
+//import { Login } from './components/login/login.component'
+import { AppComponent } from './app.component';
+import { ListComponent } from './list/list.component';
+import { ArtistListComponent } from './artist-list/artist-list.component';
+import { BudgetWidgetComponent } from './budget-widget/budget-widget.component';
+import { ConcertPackageComponent } from './concert-package/concert-package.component';
+import { HeaderBarComponent } from './header-bar/header-bar.component';
 
 @NgModule({
   declarations: [
-    Login
+    //Login,
+    AppComponent,
+    ListComponent,
+    ArtistListComponent,
+    BudgetWidgetComponent,
+    ConcertPackageComponent,
+    HeaderBarComponent
   ],
   imports: [
     HttpModule, BrowserModule, FormsModule,
@@ -24,6 +35,6 @@ import { Login } from './components/login/login.component'
   providers: [
     AuthGuard,
   ],
-  bootstrap: [Login]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,1 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: Jaapokki;
+    src: url('assets/fonts/Jaapokki-Regular.otf');
+}
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Jaapokki, Arial;
+}
+
+div {
+  box-sizing: border-box;
+}
+
+.button-primary-cta {
+  background: #EDAE49;
+  color: #F1F2EB;
+  font-size: 24px;
+  border-radius: 50px;
+  width: 186px;
+  height: 38px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
