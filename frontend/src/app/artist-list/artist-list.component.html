@@ -4,5 +4,6 @@
     <div class="artist" *ngFor="let artist of artists">
       <img [src]="artist?.image?.thumb?.url"/>
     </div>
+    <div class="loader" *ngIf="isLoading"></div>
   </div>
 </div>
