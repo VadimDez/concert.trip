@@ -53,7 +53,7 @@ class Booking {
   }
 
   getBookingFor(text, checkIn, checkOut, room1) {
-    if (checkIn <= checkOut) {
+    if (checkIn === checkOut) {
       // no need for booking
       return null;
     }
