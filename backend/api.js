@@ -39,6 +39,28 @@ router.get('/auth/spotify/callback',
   authService.setTokenCookie
 );
 
+function getArtists() {
+  return spotifyApi.getMyTopArtists().then(spotify_artists => {
+    return Promise.all(spotify_artists.body.items.map(spotify_artist => {
+      return eventfulApi.search_performers({ keywords: spotify_artist.name }).then(performers => {
+        if (performers.total_items != 0 && performers.performers && performers.performers.performer) {
+          let artist = null;
+          if (performers.total_items == 1) {
+            artist = performers.performers.performer;
+          } else {
+            artist = performers.performers.performer[0];
+          }
+          return artist;
+        }
+      });
+    })).then(artists => {
+      return artists.filter(artist => {
+        return artist !== undefined;
+      })
+    });
+  });
+}
+
 function getConcerts() {
   return spotifyApi.getMyTopArtists().then(spotify_artists => {
     return Promise.all(spotify_artists.body.items.map(spotify_artist => {
@@ -98,26 +120,20 @@ function getConcerts() {
 }
 
 // get list of spotify artists
-router.get('/api/artists', (req, res) => {
-  res.json([]).end();
+router.get('/api/artists', ensureAuthenticated, (req, res) => {
+  spotifyApi.setAccessToken(req.user.spotifyAccessToken);
+
+  getArtists().then(artists => {
+    res.status(200).json(artists).end();
+  }).catch(err => {
+    console.log(chalk.red(err));
+    res.status(400).end();
+  })
 });
 
 // return estimated price for bundle = concert + transport + booking
 router.get('/api/artists/:id/concerts', (req, res) => {
   res.json([]).end();
-});
-
-router.get('/api/offers', ensureAuthenticated, (req, res) => {
-  spotifyApi.setAccessToken(req.user.spotifyAccessToken);
-
-  getConcerts()
-    .then(offers => {
-      res.status(200).json(offers).end();
-    })
-    .catch(err => {
-      console.log(chalk.red(err));
-      res.status(400).end();
-    });
 });
 
 router.get('/transport', (req, res) => {
