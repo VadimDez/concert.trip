@@ -3,8 +3,7 @@
   <app-budget-widget></app-budget-widget>
 </div>
 <div class="list-container">
-  <app-concert-package></app-concert-package>
-  <app-concert-package></app-concert-package>
-  <app-concert-package></app-concert-package>
-  <app-concert-package></app-concert-package>
+  <div *ngFor="let concert of concerts">
+    <app-concert-package [concertData]=concert></app-concert-package>
+  </div>
 </div>
