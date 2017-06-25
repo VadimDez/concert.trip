@@ -51,13 +51,21 @@ class Eventful {
   }
 
   getTicketURL(data) {
-    let link = null
+    let link = null;
+
     if (data.links) {
       link = data.links;
+
       if (link.link) {
         link = link.link.find(elem => {
           return elem.type === 'Tickets';
-        }).url;
+        });
+
+        if (!link || !link.url) {
+          return '';
+        }
+
+        link = link.url;
       }
     }
 
