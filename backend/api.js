@@ -137,6 +137,10 @@ router.get('/api/artists/:id/concerts', (req, res) => {
           }
         }
 
+        if (bookings && bookings.hotels && bookings.hotels.length) {
+          bookings.hotels = [bookings.hotels[0]];
+        }
+
         return {
           concert,
           transport: transport.routes[cheapest],
