@@ -6,8 +6,13 @@
   <div *ngFor="let concert of concerts">
     <app-concert-package [concertData]="concert"></app-concert-package>
   </div>
+
   <div class="artist__not-selected" *ngIf="!hasSelectedArtist">
     No selected artist.
+  </div>
+
+  <div class="artist__not-selected" *ngIf="isEmpty">
+    Artist has no concerts.
   </div>
 
   <div class="progress-container" *ngIf="isLoading">

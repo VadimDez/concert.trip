@@ -12,6 +12,7 @@ export class ListComponent {
   concerts = [];
   hasSelectedArtist = false;
   isLoading: boolean;
+  isEmpty: boolean;
 
   constructor(private apiService: ApiService, private router: Router) { }
 
@@ -19,6 +20,7 @@ export class ListComponent {
     this.hasSelectedArtist = true;
     this.isLoading = true;
     this.concerts = [];
+    this.isEmpty = false;
 
     this.apiService.getConcerts(artist.id)
       .subscribe((res: any) => {
@@ -33,6 +35,7 @@ export class ListComponent {
            return data;
          });
 
+        this.isEmpty = this.concerts.length === 0;
         this.isLoading = false;
       }, () => {
         this.router.navigate(['/login']);
