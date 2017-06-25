@@ -42,6 +42,14 @@ class Eventful {
       });
     });
   }
+
+  parsePrice(price_str) {
+    return 123;
+  }
+
+  getTicketURL(data) {
+    return 'abc';
+  }
 }
 
 module.exports = Eventful;

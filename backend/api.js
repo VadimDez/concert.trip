@@ -41,10 +41,9 @@ router.get('/auth/spotify/callback',
 
 router.get('/api/getOffers', (req, res) => {
   spotifyApi.setAccessToken(req.user.spotifyAccessToken);
-
-  spotifyApi.getMyTopArtists().then((spotify_artists) => {
-    spotify_artists.body.items.forEach((spotify_artist) => {
-      eventfulApi.search_performers({ keywords: spotify_artist.name }).then((performers) => {
+  spotifyApi.getMyTopArtists().then(spotify_artists => {
+    return Promise.all(spotify_artists.body.items.map(spotify_artist => {
+      return eventfulApi.search_performers({ keywords: spotify_artist.name }).then(performers => {
         if (performers.total_items != 0 && performers.performers && performers.performers.performer) {
           let artist = null;
           if (performers.total_items == 1) {
@@ -52,24 +51,40 @@ router.get('/api/getOffers', (req, res) => {
           } else {
             artist = performers.performers.performer[0];
           }
-          eventfulApi.get_performer_events({ id: artist.id }).then((performer_events) => {
+          return eventfulApi.get_performer_events({ id: artist.id }).then(performer_events => {
             if (performer_events.event_count != 0) {
-              performer_events.event.forEach((p_event) => {
-                eventfulApi.get_event({ id: p_event.id }).then((event_details) => {
+              // start building offer from here (has events)
+              let artist_offer = { name: spotify_artist.name, offers: [] };
+              return Promise.all(performer_events.event.map(p_event => {
+                return eventfulApi.get_event({ id: p_event.id }).then(event_details => {
                   if (event_details.price) {
-                    console.log('Artist "' + spotify_artist.name + '" has concert "' + event_details.title + '" '
-                      + 'at ' + event_details.address + ' (' + event_details.city + ', ' + event_details.country + ') '
-                      + ' that costs "' + event_details.price + '"');
+                    let event_offer = {
+                      trip: {},
+                      accommodation: {},
+                      concert: {
+                        title: event_details.title,
+                        venue_name: event_details.venue_name,
+                        address: event_details.address,
+                        city: event_details.city,
+                        country: event_details.country,
+                        price: eventfulApi.parsePrice(event_details.price),
+                        tickets_url: eventfulApi.getTicketURL(event_details)
+                      }
+                    };
+                    return event_offer;
                   }
                 });
+              })).then(event_offers => {
+                artist_offer.offers = event_offers;
+                return artist_offer;
               });
             }
           });
         }
       });
-    });
-  }, function(err) {
-    console.error(err);
+    }));
+  }).then((offers) => {
+    res.status(200).json(offers);
   });
 });
 
