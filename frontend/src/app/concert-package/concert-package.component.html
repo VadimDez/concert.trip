@@ -30,11 +30,10 @@
     </div>
   </div>
   <!-- Hotel -->
-  <div class="concert-package-hotel-container">
-    <div class="hotel-icon">
-    </div>
+  <div class="concert-package-hotel-container" *ngIf="isHotelRequired">
+    <div class="hotel-icon"></div>
     <div class="concert-package-hotel-name">
-      Novo Hotel Rossi
+      {{ hotelName }}
     </div>
   </div>
   <!-- Flight -->
@@ -42,7 +41,7 @@
     <div class="flight-icon">
     </div>
     <div class="concert-package-flight-info">
-      Lufthansa MUC-VRN - 1h 0m
+      {{ concertData?.transport?.name }} - {{ concertData?.transport?.distance }} km - {{ getTime() }}
     </div>
   </div>
   <div class="book-now-container">

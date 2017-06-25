@@ -1,13 +1,20 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-concert-package',
   templateUrl: './concert-package.component.html',
   styleUrls: ['./concert-package.component.css']
 })
-export class ConcertPackageComponent {
+export class ConcertPackageComponent implements OnInit {
   @Input() concertData: any;
-  constructor() { }
+  isHotelRequired: boolean;
+  hotelName: string;
+
+  constructor() {}
+
+  ngOnInit() {
+    this.getHotelName();
+  }
 
   getPrice() {
     console.log(this.concertData);
@@ -22,6 +29,22 @@ export class ConcertPackageComponent {
   }
 
   getBookingPrice() {
-    return this.concertData.booking && this.concertData.booking.hotels && this.concertData.booking.hotels.length ? this.concertData.booking.hotels[0].price : 0;
+    return this.concertData.bookings && this.concertData.bookings.hotels && this.concertData.bookings.hotels.length ? this.concertData.bookings.hotels[0].price : 0;
+  }
+
+  getHotelName() {
+    if (!this.concertData.bookings || !this.concertData.bookings.hotels || !this.concertData.bookings.hotels.length) {
+      this.isHotelRequired = false;
+      return;
+    }
+
+    this.isHotelRequired = true;
+    this.hotelName = this.concertData.bookings.hotels[0].hotel_name;
+  }
+
+  getTime() {
+    const time = this.concertData.transport.duration;
+
+    return `${ Math.floor(time / 60) }h ${ Math.floor(time % 60) } m`;
   }
 }
