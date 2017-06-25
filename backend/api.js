@@ -22,7 +22,7 @@ const spotifyApi = new SpotifyWebApi({
 
 const eventfulApi = new Eventful(config.eventful.APP_KEY);
 
-let booking = new Booking('b_munich_hackers17', 'f7u@9prYLjCZq,w]2Gd[');
+let booking = new Booking(config.booking.username, config.booking.password);
 let router = new Router();
 
 router.get('/auth/spotify',
@@ -111,15 +111,22 @@ router.get('/transport', (req, res) => {
     });
 });
 
-router.get('/asd', (req, res) => {
-  // booking.autocomplete('New York')
-  // booking.getCities('Munich')
-  // booking.getHotels('-3875389')
-  // booking.getHotels('20088325')
-  booking.getHotelAvailabilityV2(null, null, '20088325')
-    .then((data) => {
-      res.status(200).json(data).end();
-    })
+router.get('/trip', (req, res) => {
+  const origin = 'Munich';
+  const destination = 'Zurich';
+
+  Promise.all([
+    getTransport(origin, null, destination),
+    booking.getBookingFor(destination)
+  ]).then((data) => {
+    const transport = data[0];
+    const bookings = data[1];
+
+    res.status(200).json({
+      transport,
+      bookings
+    }).end();
+  })
     .catch((err) => {
       console.log(chalk.red(err));
       res.status(400).end();

@@ -36,13 +36,40 @@ class Booking {
     return this.performRequest(url);
   }
 
-  getHotelAvailabilityV2(checkin, checkout, city_ids, room1) {
-    checkin = checkin || '2017-09-22';
-    checkout = checkout || '2017-09-23';
+  getCityIdFromAutocomplete(text) {
+    const destType = 'city';
+    return this.autocomplete(text)
+      .then(res => {
+        res.filter(object => {
+          return object.dest_type === destType;
+        });
+
+        if (res.length) {
+          return res[0].dest_id;
+        }
+
+        return null;
+      });
+  }
+
+  getBookingFor(text, checkIn, checkOut, room1) {
+    return this.getCityIdFromAutocomplete(text)
+      .then(city_id => {
+        if (!city_id) {
+          return null;
+        }
+
+        return this.getHotelAvailabilityV2(checkIn, checkOut, city_id, room1);
+      })
+  }
+
+  getHotelAvailabilityV2(checkIn, checkOut, city_ids, room1) {
+    checkIn = checkIn || '2017-09-22';
+    checkOut = checkOut || '2017-09-23';
     city_ids = city_ids || '-1565670';
     room1 = room1 || 'A';
 
-    let url = `https://${ this.username }:${ this.password }@distribution-xml.booking.com/json/getHotelAvailabilityV2?checkin=${ checkin }&checkout=${ checkout }&city_ids=${ city_ids }&room1=${ room1 }&output=room_details,hotel_details`;
+    let url = `https://${ this.username }:${ this.password }@distribution-xml.booking.com/json/getHotelAvailabilityV2?checkin=${ checkIn }&checkout=${ checkOut }&city_ids=${ city_ids }&room1=${ room1 }&output=room_details,hotel_details`;
     return this.performRequest(url);
   }
 
