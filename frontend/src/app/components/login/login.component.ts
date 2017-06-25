@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Http } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { contentHeaders } from '../common/headers';
 
 
@@ -12,7 +12,9 @@ import { contentHeaders } from '../common/headers';
 export class LoginComponent {
   constructor(public router: Router, public http: Http) {
     this.http.get('http://localhost:3000/users/me', { withCredentials: true })
-      .subscribe(() => {
+      .subscribe((res: Response) => {
+        this.router.navigate(['/main']);
+      }, err => {
 
       });
   }
