@@ -26,8 +26,9 @@ export class ListComponent {
          // .filter((concert) => { return concert.price; })
          .map((data) => {
            data.concert.startDate = moment(data.concert.start_time).format('MMMM DD, YYYY');
-           data.endDate = moment(data.concert.end_time).format('MMMM DD, YYYY');
-           data.startTime = moment(data.concert.start_time).format('HH:mm');
+           data.concert.endDate = moment(data.concert.end_time).format('MMMM DD, YYYY');
+           data.concert.startTime = moment(data.concert.start_time).format('HH:mm');
+           data.concert.image = artist.image.medium.url;
            return data;
          });
 
