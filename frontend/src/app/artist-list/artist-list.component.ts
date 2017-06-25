@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ApiService } from '../services/api.service';
 
 @Component({
@@ -8,15 +8,28 @@ import { ApiService } from '../services/api.service';
 })
 export class ArtistListComponent implements OnInit {
   artists = [];
+  isLoading: boolean;
 
-  constructor(apiService: ApiService) {
-    apiService.getArtists()
-      .subscribe((res: any) => {
-        this.artists = res.json();
-      });
+  @Output() selectArtist = new EventEmitter<any>();
+
+  constructor(private apiService: ApiService) {
+    this.getArtists();
   }
 
   ngOnInit() {
   }
 
+  getArtists() {
+    this.isLoading = true;
+
+    this.apiService.getArtists()
+      .subscribe((res: any) => {
+        this.artists = res.json();
+        this.isLoading = false;
+      });
+  }
+
+  onSelectArtist(artist) {
+    this.selectArtist.next(artist);
+  }
 }
