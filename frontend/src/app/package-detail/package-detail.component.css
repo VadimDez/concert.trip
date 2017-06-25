@@ -1,0 +1,119 @@
+.package-detail-general-info-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px 10px 0;
+}
+
+.package-detail-date-info-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.package-detail-artist-name {
+  font-size: 24px;
+}
+
+.package-detail-date {
+  font-size: 18px;
+}
+
+.package-detail-time {
+  font-size: 14px;
+}
+
+.package-detail-total-price {
+  font-size: 24px;
+  color: #ED6256;
+}
+
+.package-detail-box {
+  background: #393D3F;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.package-detail-box-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.package-detail-box-title {
+  color: #EDAE49;
+  font-size: 18px;
+}
+
+.package-detail-box-price {
+  color: #ED6256;
+  font-size: 24px;
+}
+
+.package-detail-box-content {
+  color: #F1F2EB;
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+}
+
+.package-detail-event-image img {
+  width: 142px;
+  height: 142px;
+}
+
+.package-detail-event-venue-info {
+  margin-left: 10px;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.package-detail-box-booking-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 10px;
+}
+
+.package-detail-box-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.package-detail-hotel-image img {
+  width: 142px;
+  height: 142px;
+}
+
+.package-detail-hotel-info {
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.package-detail-box-schedule-content {
+  flex-direction: column;
+}
+
+.package-detail-box-trip-schedule-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.package-detail-box-trip-schedule-container:first-of-type {
+  margin-top: 0px;
+}
+
+.package-detail-box-trip-time-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.package-detail-box-trip-stops {
+  color: #ED6256;
+}
