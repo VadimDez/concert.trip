@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ApiService } from '../services/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-artist-list',
@@ -12,7 +13,7 @@ export class ArtistListComponent implements OnInit {
 
   @Output() selectArtist = new EventEmitter<any>();
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private router: Router) {
     this.getArtists();
   }
 
@@ -26,6 +27,8 @@ export class ArtistListComponent implements OnInit {
       .subscribe((res: any) => {
         this.artists = res.json();
         this.isLoading = false;
+      }, () => {
+        this.router.navigate(['/login']);
       });
   }
 

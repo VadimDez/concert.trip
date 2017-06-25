@@ -4,6 +4,13 @@
 </div>
 <div class="list-container">
   <div *ngFor="let concert of concerts">
-    <app-concert-package [concertData]=concert></app-concert-package>
+    <app-concert-package [concertData]="concert"></app-concert-package>
+  </div>
+  <div class="artist__not-selected" *ngIf="!hasSelectedArtist">
+    No selected artist.
+  </div>
+
+  <div class="progress-container" *ngIf="isLoading">
+    <div class="progress-spinner"></div>
   </div>
 </div>

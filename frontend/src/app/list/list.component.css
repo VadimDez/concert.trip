@@ -1,0 +1,39 @@
+.artist__not-selected {
+    padding-top: 25px;
+    text-align: center;
+    font-size: 24px;
+}
+
+.progress-container {
+    text-align: center;
+}
+.progress-spinner {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 5px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    -webkit-animation: rotate 800ms linear infinite;
+    animation: rotate 800ms linear infinite;
+}
+@-webkit-keyframes rotate {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@keyframes rotate {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}

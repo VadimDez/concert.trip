@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { HttpModule } from '@angular/http';
+import { Http, HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
@@ -43,7 +43,7 @@ import { ApiService } from './services/api.service';
   providers: [
     AuthGuard,
     SpotifyAuthGuard,
-    ApiService
+    ApiService,
   ],
   bootstrap: [AppComponent]
 })
