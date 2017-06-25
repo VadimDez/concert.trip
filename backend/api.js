@@ -119,8 +119,38 @@ router.get('/api/artists', ensureAuthenticated, (req, res) => {
 
 // return estimated price for bundle = concert + transport + booking
 router.get('/api/artists/:id/concerts', (req, res) => {
+  let origin = 'Munich';
   getConcerts(req.params.id).then(concerts => {
-    res.status(200).json(concerts).end();
+    return Promise.all(concerts.map((concert => {
+      const destination = concert.city;
+
+      return Promise.all([
+        getTransport(origin, null, destination),
+        booking.getBookingFor(destination)
+      ]).then((data) => {
+        const transport = data[0];
+        const bookings = data[1];
+
+        let cheapest = 0;
+
+        for (let i = 1; i < transport.routes.length; i++) {
+          if (transport.routes[cheapest].price > transport.routes[i]) {
+            cheapest = i;
+          }
+        }
+
+        concert.transport = transport.routes[cheapest];
+        concert.bookings = bookings;
+        return concert;
+      })
+      .catch((err) => {
+        console.log(chalk.red(err));
+        res.status(400).end();
+      });
+    })))
+    .then(concerts => {
+      res.status(200).json(concerts).end();
+    });
   }).catch(err => {
     console.log(chalk.red(err));
     res.status(400).end();
