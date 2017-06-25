@@ -53,6 +53,11 @@ class Booking {
   }
 
   getBookingFor(text, checkIn, checkOut, room1) {
+    if (checkIn <= checkOut) {
+      // no need for booking
+      return null;
+    }
+
     return this.getCityIdFromAutocomplete(text)
       .then(city_id => {
         if (!city_id) {

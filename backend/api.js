@@ -79,7 +79,7 @@ function getEventFromDetails(event_details) {
     city: event_details.city,
     country: event_details.country,
     start_time: event_details.start_time,
-    end_time: event_details.end_time || default_end_time,
+    end_time: event_details.end_time || default_end_time.toISOString().slice(0,10),
     price: event_details.price ? eventfulApi.parsePrice(event_details.price): 0,
     tickets_url: eventfulApi.getTicketURL(event_details)
   };
@@ -119,10 +119,12 @@ router.get('/api/artists/:id/concerts', (req, res) => {
   getConcerts(req.params.id).then(concerts => {
     return Promise.all(concerts.map((concert => {
       const destination = concert.city;
+      const checkInDate = concert.start_time.slice(0, 10);
+      const checkOutDate = concert.end_time.slice(0, 10);
 
       return Promise.all([
         getTransport(origin, null, destination),
-        booking.getBookingFor(destination)
+        booking.getBookingFor(destination, checkInDate, checkOutDate)
       ]).then((data) => {
         const transport = data[0];
         const bookings = data[1];
