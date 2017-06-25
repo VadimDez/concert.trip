@@ -19,7 +19,7 @@ export class ConcertPackageComponent implements OnInit {
   getPrice() {
     console.log(this.concertData);
 
-    return this.concertData.concert.price
+    return parseInt(this.concertData.concert.price)
       + parseInt(this.getBookingPrice(), 10)
       + parseInt(this.getTransportPrice(), 10);
   }
