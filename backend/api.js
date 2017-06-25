@@ -137,9 +137,11 @@ router.get('/api/artists/:id/concerts', (req, res) => {
           }
         }
 
-        concert.transport = transport.routes[cheapest];
-        concert.bookings = bookings;
-        return concert;
+        return {
+          concert,
+          transport: transport.routes[cheapest],
+          bookings
+        };
       })
       .catch((err) => {
         console.log(chalk.red(err));

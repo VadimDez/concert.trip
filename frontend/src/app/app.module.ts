@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { HttpModule } from '@angular/http';
+import { Http, HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
@@ -20,6 +20,7 @@ import { MainComponent } from './main/main.component';
 import { CookieModule } from 'ngx-cookie';
 import { PackageDetailComponent } from './package-detail/package-detail.component';
 import { ApiService } from './services/api.service';
+import { AuthenticatedHttpService } from './http.interceptor';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,7 @@ import { ApiService } from './services/api.service';
   providers: [
     AuthGuard,
     SpotifyAuthGuard,
-    ApiService
+    ApiService,
   ],
   bootstrap: [AppComponent]
 })
