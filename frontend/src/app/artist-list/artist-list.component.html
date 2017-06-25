@@ -1,7 +1,7 @@
 <div class="artist-list-container">
   <div class="artist-list-title">Artists</div>
   <div class="artist-list">
-    <div class="artist" *ngFor="let artist of artists">
+    <div class="artist" *ngFor="let artist of artists" (click)="onSelectArtist(artist)">
       <img [src]="artist?.image?.thumb?.url"/>
     </div>
     <div class="loader" *ngIf="isLoading"></div>

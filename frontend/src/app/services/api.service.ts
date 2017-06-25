@@ -16,4 +16,8 @@ export class ApiService {
   getArtists() {
     return this.http.get(`${ backend }artists`, { withCredentials: true })
   }
+
+  getConcerts(artistId) {
+    return this.http.get(`${ backend }artists/${ artistId }/concerts`);
+  }
 }
