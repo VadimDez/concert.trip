@@ -1,1 +1,8 @@
-<div class="header-bar">Concert Trip</div>
+<div class="header-bar">
+  <div *ngIf="showBackButton" routerLink="/main" class="header-bar-back-button">
+    <img src="../../assets/icons/back.svg" alt="">
+  </div>
+  <div class="header-bar-title">
+    Concert Trip
+  </div>
+</div>
