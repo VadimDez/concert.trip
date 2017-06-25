@@ -18,6 +18,7 @@ export class ListComponent {
   onSelectArtist(artist) {
     this.hasSelectedArtist = true;
     this.isLoading = true;
+    this.concerts = [];
 
     this.apiService.getConcerts(artist.id)
       .subscribe((res: any) => {
