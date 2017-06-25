@@ -4,6 +4,7 @@
 
 const request = require('request');
 const Promise = require('bluebird');
+const chalk = require('chalk');
 
 class Booking {
 
@@ -36,7 +37,7 @@ class Booking {
     return this.performRequest(url);
   }
 
-  getCityIdFromAutocomplete(text) {
+  getCityFromAutocomplete(text) {
     const destType = 'city';
     return this.autocomplete(text)
       .then(res => {
@@ -45,7 +46,11 @@ class Booking {
         });
 
         if (res.length) {
-          return res[0].dest_id;
+          return {
+            city_id: res[0].dest_id,
+            longitude: res[0].longitude,
+            latitude: res[0].latitude
+          };
         }
 
         return null;
@@ -58,23 +63,21 @@ class Booking {
       return null;
     }
 
-    return this.getCityIdFromAutocomplete(text)
-      .then(city_id => {
-        if (!city_id) {
+    return this.getCityFromAutocomplete(text)
+      .then(city => {
+        console.log(chalk.green('city_id'));
+        console.log(chalk.green(city.city_id));
+        if (!city.city_id) {
           return null;
         }
 
-        return this.getHotelAvailabilityV2(checkIn, checkOut, city_id, room1);
+        return this.getHotelAvailabilityV2(checkIn, checkOut, city.latitude, city.longitude, room1);
       })
   }
 
-  getHotelAvailabilityV2(checkIn, checkOut, city_ids, room1) {
-    checkIn = checkIn || '2017-09-22';
-    checkOut = checkOut || '2017-09-23';
-    city_ids = city_ids || '-1565670';
-    room1 = room1 || 'A';
-
-    let url = `https://${ this.username }:${ this.password }@distribution-xml.booking.com/json/getHotelAvailabilityV2?checkin=${ checkIn }&checkout=${ checkOut }&city_ids=${ city_ids }&room1=${ room1 }&output=room_details,hotel_details`;
+  getHotelAvailabilityV2(checkIn, checkOut, latitude, longitude, radius = 15, room1 = 'A', currency = 'EUR') {
+    const orderBy = 'price';
+    let url = `https://${ this.username }:${ this.password }@distribution-xml.booking.com/json/getHotelAvailabilityV2?checkin=${ checkIn }&checkout=${ checkOut }&latitude=${ latitude }&longitude=${ longitude }&room1=${ room1 }&radius=${ radius }&currency_code=${ currency }&order_by=${ orderBy }&output=room_details,hotel_details`;
     return this.performRequest(url);
   }
 

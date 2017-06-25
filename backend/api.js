@@ -70,7 +70,7 @@ function getArtists() {
 function getEventFromDetails(event_details) {
   let default_end_time = new Date(event_details.start_time);
 
-  default_end_time.setHours(default_end_time.getHours() + 8);
+  default_end_time.setHours(default_end_time.getHours() + 24);
 
   return {
     title: event_details.title,
