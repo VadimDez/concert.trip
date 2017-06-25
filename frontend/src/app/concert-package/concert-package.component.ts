@@ -8,4 +8,9 @@ import { Component, Input } from '@angular/core';
 export class ConcertPackageComponent {
   @Input() concertData: Object;
   constructor() { }
+
+  getPrice() {
+    console.log(this.concertData);
+    // this.concertData
+  }
 }
