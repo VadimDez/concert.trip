@@ -56,8 +56,6 @@ function getArtists() {
           }
         });
       })).then(artists => {
-        console.log(chalk.red('artists'));
-        console.log(chalk.red(artists));
         if (!artists) {
           return null;
         }

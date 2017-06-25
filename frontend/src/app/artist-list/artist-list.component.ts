@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-artist-list',
@@ -6,8 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./artist-list.component.css']
 })
 export class ArtistListComponent implements OnInit {
+  artists = [];
 
-  constructor() { }
+  constructor(apiService: ApiService) {
+    apiService.getArtists()
+      .subscribe((res: any) => {
+        this.artists = res.json();
+      });
+  }
 
   ngOnInit() {
   }
