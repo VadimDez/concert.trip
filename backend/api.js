@@ -68,10 +68,6 @@ function getArtists() {
 }
 
 function getEventFromDetails(event_details) {
-  if (!event_details.price) {
-    event_details.price = 0;
-  }
-
   let default_end_time = new Date(event_details.start_time);
 
   default_end_time.setHours(default_end_time.getHours() + 8);
@@ -84,7 +80,7 @@ function getEventFromDetails(event_details) {
     country: event_details.country,
     start_time: event_details.start_time,
     end_time: event_details.end_time || default_end_time,
-    price: eventfulApi.parsePrice(event_details.price),
+    price: event_details.price ? eventfulApi.parsePrice(event_details.price): 0,
     tickets_url: eventfulApi.getTicketURL(event_details)
   };
 }
