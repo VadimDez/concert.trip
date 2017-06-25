@@ -47,7 +47,7 @@ class Eventful {
   }
 
   parsePrice(price_str) {
-    return 123;
+    return price_str.match(/^\d+|\d+\b|\d+(?=\w)/g)[0];
   }
 
   getTicketURL(data) {
