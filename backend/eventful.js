@@ -14,7 +14,7 @@ class Eventful {
   build_params(params) {
     let p = '';
     for (let param of Object.keys(params)) {
-      p += '&' + param + '=' + params[param];
+      p += '&' + param + '=' + encodeURIComponent(params[param]);
     }
     return p;
   }
@@ -37,6 +37,9 @@ class Eventful {
         if (!error && response.statusCode === 200) {
           resolve(JSON.parse(body));
         } else {
+          console.log(chalk.red(error));
+          console.log(chalk.green(request_url));
+          console.log(chalk.red(body));
           reject(error);
         }
       });
