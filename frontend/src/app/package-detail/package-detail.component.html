@@ -4,17 +4,17 @@
       <div class="package-detail-general-info-container">
         <div class="package-detail-date-info-container">
           <div class="package-detail-artist-name">
-            Imagine Dragons
+            {{concertData?.concert?.title}}
           </div>
           <div class="package-detail-date">
-            July 10, 2017
+            {{concertData?.concert?.startDate}}
           </div>
           <div class="package-detail-time">
-            21.00
+            {{concertData?.concert?.startTime}}
           </div>
         </div>
         <div class="package-detail-total-price">
-          500€
+          {{this.concertData.totalPrice}}€
         </div>
       </div>
       <div class="package-detail-box">
@@ -23,19 +23,19 @@
             The Event
           </div>
           <div class="package-detail-box-price">
-            500€
+            {{concertData?.concert?.price}}€
           </div>
         </div>
         <div class="package-detail-box-content">
           <div class="package-detail-event-image">
-            <img src="http://s1.evcdn.com/images/block/I0-001/015/001/088-6.jpeg_/imagine-dragons-88.jpeg">
+            <img src="{{concertData?.concert?.image}}">
           </div>
           <div class="package-detail-event-venue-info">
             <div class="package-detail-event-venue-name">
-              Anfiteatro Arena di Verona
+              {{concertData?.concert?.venue_name}}
             </div>
             <div class="package-detail-event-city">
-              Verona, Italy
+              {{concertData.concert.city }}, {{ concertData.concert.country}}
             </div>
           </div>
         </div>
@@ -43,9 +43,11 @@
           <div class="package-detail-box-buttons">
             <div *ngIf="!eventBooked; then bookButtonEvent else doneButtonEvent"></div>
             <ng-template #bookButtonEvent>
-              <div class="button-primary-cta button-small">
-                Book Now
-              </div>
+              <a href="{{concertData?.concert?.tickets_url}}">
+                <div class="button-primary-cta button-small">
+                  Book Now
+                </div>
+              </a>
               <div (click)="toggleEventBooked()" class="button-secondary-cta">
                 Mark as completed
               </div>
@@ -68,16 +70,19 @@
             Your Hotel
           </div>
           <div class="package-detail-box-price">
-            60€
+            {{concertData?.bookings?.hotels[0]?.price}} {{concertData?.bookings?.hotels[0]?.hotel_currency_code}}
           </div>
         </div>
         <div class="package-detail-box-content">
           <div class="package-detail-hotel-image">
-            <img src="https://s-ec.bstatic.com/images/hotel/square200/268/26807824.jpg">
+            <img src="{{concertData?.bookings?.hotels[0]?.photo}}">
           </div>
           <div class="package-detail-hotel-info">
             <div class="package-detail-hotel-name">
-              Novo Hotel Rossi
+              {{concertData?.bookings?.hotels[0]?.hotel_name}}
+            </div>
+            <div class="package-detail-hotel-address">
+              {{concertData?.bookings?.hotels[0]?.address}}
             </div>
           </div>
         </div>
@@ -85,9 +90,11 @@
           <div class="package-detail-box-buttons">
             <div *ngIf="!hotelBooked; then bookButtonHotel else doneButtonHotel"></div>
             <ng-template #bookButtonHotel>
-              <div class="button-primary-cta button-small">
-                Book Now
-              </div>
+              <a href="{{concertData?.bookings?.hotels[0]?.hotel_url}}">
+                <div class="button-primary-cta button-small">
+                  Book Now
+                </div>
+              </a>
               <div (click)="toggleHotelBooked()" class="button-secondary-cta">
                 Mark as completed
               </div>
@@ -110,7 +117,7 @@
             Your Trip
           </div>
           <div class="package-detail-box-price">
-            170€
+            {{concertData?.transport?.indicativePrice?.price}} {{concertData?.transport?.indicativePrice?.currency}}
           </div>
         </div>
         <div class="package-detail-box-content package-detail-box-schedule-content">

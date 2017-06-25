@@ -20,6 +20,7 @@ import { MainComponent } from './main/main.component';
 import { CookieModule } from 'ngx-cookie';
 import { PackageDetailComponent } from './package-detail/package-detail.component';
 import { ApiService } from './services/api.service';
+import { PackageService } from './package.service';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ApiService } from './services/api.service';
     AuthGuard,
     SpotifyAuthGuard,
     ApiService,
+    PackageService
   ],
   bootstrap: [AppComponent]
 })
