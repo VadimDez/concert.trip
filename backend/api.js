@@ -79,7 +79,7 @@ function getEventFromDetails(event_details) {
     city: event_details.city,
     country: event_details.country,
     start_time: event_details.start_time,
-    end_time: event_details.end_time || default_end_time,
+    end_time: event_details.end_time || default_end_time.toISOString().slice(0,10),
     price: event_details.price ? eventfulApi.parsePrice(event_details.price): 0,
     tickets_url: eventfulApi.getTicketURL(event_details)
   };
@@ -115,8 +115,40 @@ router.get('/api/artists', ensureAuthenticated, (req, res) => {
 
 // return estimated price for bundle = concert + transport + booking
 router.get('/api/artists/:id/concerts', (req, res) => {
+  let origin = 'Munich';
   getConcerts(req.params.id).then(concerts => {
-    res.status(200).json(concerts).end();
+    return Promise.all(concerts.map((concert => {
+      const destination = concert.city;
+      const checkInDate = concert.start_time.slice(0, 10);
+      const checkOutDate = concert.end_time.slice(0, 10);
+
+      return Promise.all([
+        getTransport(origin, null, destination),
+        booking.getBookingFor(destination, checkInDate, checkOutDate)
+      ]).then((data) => {
+        const transport = data[0];
+        const bookings = data[1];
+
+        let cheapest = 0;
+
+        for (let i = 1; i < transport.routes.length; i++) {
+          if (transport.routes[cheapest].price > transport.routes[i]) {
+            cheapest = i;
+          }
+        }
+
+        concert.transport = transport.routes[cheapest];
+        concert.bookings = bookings;
+        return concert;
+      })
+      .catch((err) => {
+        console.log(chalk.red(err));
+        res.status(400).end();
+      });
+    })))
+    .then(concerts => {
+      res.status(200).json(concerts).end();
+    });
   }).catch(err => {
     console.log(chalk.red(err));
     res.status(400).end();
