@@ -40,25 +40,27 @@ router.get('/auth/spotify/callback',
 );
 
 function getArtists() {
-  return spotifyApi.getMyTopArtists().then(spotify_artists => {
-    return Promise.all(spotify_artists.body.items.map(spotify_artist => {
-      return eventfulApi.search_performers({ keywords: spotify_artist.name }).then(performers => {
-        if (performers.total_items != 0 && performers.performers && performers.performers.performer) {
-          let artist = null;
-          if (performers.total_items == 1) {
-            artist = performers.performers.performer;
-          } else {
-            artist = performers.performers.performer[0];
+  return spotifyApi.getMyTopArtists()
+    .then(spotify_artists => {
+      return Promise.all(spotify_artists.body.items.map(spotify_artist => {
+        return eventfulApi.search_performers({ keywords: spotify_artist.name }).then(performers => {
+          if (performers.total_items !== 0 && performers.performers && performers.performers.performer) {
+            let artist = null;
+            if (performers.total_items === 1) {
+              artist = performers.performers.performer;
+            } else {
+              artist = performers.performers.performer[0];
+            }
+
+            return artist;
           }
-          return artist;
-        }
+        });
+      })).then(artists => {
+        return artists.filter(artist => {
+          return artist !== undefined;
+        })
       });
-    })).then(artists => {
-      return artists.filter(artist => {
-        return artist !== undefined;
-      })
     });
-  });
 }
 
 function getConcerts() {

@@ -3,6 +3,7 @@
  */
 import { Component } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'main-component',
@@ -12,7 +13,10 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 export class MainComponent {
   title = 'app';
 
-  constructor(router: Router) {
-
+  constructor(router: Router, apiService: ApiService) {
+    apiService.getArtists()
+      .subscribe((res: any) => {
+        console.log(res);
+      });
   }
 }

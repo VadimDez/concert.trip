@@ -19,6 +19,7 @@ import { SpotifyAuthGuard } from './guards/auth.guard';
 import { MainComponent } from './main/main.component';
 import { CookieModule } from 'ngx-cookie';
 import { PackageDetailComponent } from './package-detail/package-detail.component';
+import { ApiService } from './services/api.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { PackageDetailComponent } from './package-detail/package-detail.componen
   ],
   providers: [
     AuthGuard,
-    SpotifyAuthGuard
+    SpotifyAuthGuard,
+    ApiService
   ],
   bootstrap: [AppComponent]
 })
