@@ -67,34 +67,41 @@ function getArtists() {
     });
 }
 
+function getEventFromDetails(event_details) {
+  if (!event_details.price) {
+    event_details.price = 0;
+  }
+
+  let default_end_time = new Date(event_details.start_time);
+
+  default_end_time.setHours(default_end_time.getHours() + 8);
+
+  return {
+    title: event_details.title,
+    venue_name: event_details.venue_name,
+    address: event_details.address,
+    city: event_details.city,
+    country: event_details.country,
+    start_time: event_details.start_time,
+    end_time: event_details.end_time || default_end_time,
+    price: eventfulApi.parsePrice(event_details.price),
+    tickets_url: eventfulApi.getTicketURL(event_details)
+  };
+}
+
 function getConcerts(artist_id) {
   return eventfulApi.get_performer_events({ id: artist_id }).then(artist_events => {
-    if (artist_events.event_count != 0) {
-      return Promise.all(artist_events.event.map(p_event => {
-        return eventfulApi.get_event({ id: p_event.id }).then(event_details => {
-          if (event_details.price) {
-            let default_end_time = new Date(event_details.start_time);
-            default_end_time.setHours(default_end_time.getHours() + 8);
-            let concerts = {
-              title: event_details.title,
-              venue_name: event_details.venue_name,
-              address: event_details.address,
-              city: event_details.city,
-              country: event_details.country,
-              start_time: event_details.start_time,
-              end_time: event_details.end_time || default_end_time,
-              price: eventfulApi.parsePrice(event_details.price),
-              tickets_url: eventfulApi.getTicketURL(event_details)
-            }
-            return concerts;
-          }
-        });
-      })).then(p_events => {
-        return p_events.filter(p_event => {
-          return p_event !== undefined;
-        })
-      })
+    if (parseInt(artist_events.event_count, 10) === 0) {
+      return [];
     }
+
+    return Promise.all(artist_events.event.map(p_event => {
+      return eventfulApi.get_event({ id: p_event.id }).then(getEventFromDetails);
+    })).then(p_events => {
+      return p_events.filter(p_event => {
+        return p_event !== undefined;
+      });
+    });
   });
 }
 
@@ -103,7 +110,7 @@ router.get('/api/artists', ensureAuthenticated, (req, res) => {
   spotifyApi.setAccessToken(req.user.spotifyAccessToken);
 
   getArtists().then(artists => {
-    res.status(200).json(artists).end();
+    res.status(200).json(artists || []).end();
   }).catch(err => {
     console.log(chalk.red(err));
     res.status(400).end();
