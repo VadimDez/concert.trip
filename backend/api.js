@@ -39,9 +39,8 @@ router.get('/auth/spotify/callback',
   authService.setTokenCookie
 );
 
-router.get('/api/getOffers', (req, res) => {
-  spotifyApi.setAccessToken(req.user.spotifyAccessToken);
-  spotifyApi.getMyTopArtists().then(spotify_artists => {
+function getConcerts() {
+  return spotifyApi.getMyTopArtists().then(spotify_artists => {
     return Promise.all(spotify_artists.body.items.map(spotify_artist => {
       return eventfulApi.search_performers({ keywords: spotify_artist.name }).then(performers => {
         if (performers.total_items != 0 && performers.performers && performers.performers.performer) {
@@ -95,9 +94,20 @@ router.get('/api/getOffers', (req, res) => {
         return offer !== undefined;
       });
     });
-  }).then((offers) => {
-    res.status(200).json(offers);
   });
+}
+
+router.get('/api/offers', ensureAuthenticated, (req, res) => {
+  spotifyApi.setAccessToken(req.user.spotifyAccessToken);
+
+  getConcerts()
+    .then(offers => {
+      res.status(200).json(offers).end();
+    })
+    .catch(err => {
+      console.log(chalk.red(err));
+      res.status(400).end();
+    });
 });
 
 router.get('/transport', (req, res) => {

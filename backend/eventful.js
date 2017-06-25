@@ -1,4 +1,5 @@
 const request = require('request');
+const chalk = require('chalk');
 
 class Eventful {
   constructor(app_key) {
@@ -33,9 +34,8 @@ class Eventful {
   wrap_return(request_url) {
     return new Promise((resolve, reject) => {
       request(request_url, (error, response, body) => {
-        const json = JSON.parse(body);
-        if (!error && response.statusCode == 200) {
-          resolve(json);
+        if (!error && response.statusCode === 200) {
+          resolve(JSON.parse(body));
         } else {
           reject(error);
         }
