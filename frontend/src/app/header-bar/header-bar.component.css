@@ -8,6 +8,16 @@
   vertical-align: middle;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   position: fixed;
+}
+
+.header-bar-back-button {
+  width: 15.85px;
+  height: 30px;
+  margin-left: 10px;
+}
+
+.header-bar-title {
+  flex: 1;
 }

@@ -1,5 +1,5 @@
 <div class="main-container">
-    <app-header-bar></app-header-bar>
+    <app-header-bar showBackButton=true></app-header-bar>
     <div class="content-container">
       <div class="package-detail-general-info-container">
         <div class="package-detail-date-info-container">
@@ -41,12 +41,23 @@
         </div>
         <div class="package-detail-box-booking-container">
           <div class="package-detail-box-buttons">
-            <div class="button-primary-cta button-small">
-              Book Now
-            </div>
-            <div class="button-secondary-cta">
-              Mark as completed
-            </div>
+            <div *ngIf="!eventBooked; then bookButtonEvent else doneButtonEvent"></div>
+            <ng-template #bookButtonEvent>
+              <div class="button-primary-cta button-small">
+                Book Now
+              </div>
+              <div (click)="toggleEventBooked()" class="button-secondary-cta">
+                Mark as completed
+              </div>
+            </ng-template>
+            <ng-template #doneButtonEvent>
+              <div class="button-primary-cta button-small button-done">
+                Done
+              </div>
+              <div (click)="toggleEventBooked()" class="button-secondary-cta">
+                Mark as uncompleted
+              </div>
+            </ng-template>
           </div>
         </div>
       </div>
@@ -72,12 +83,23 @@
         </div>
         <div class="package-detail-box-booking-container">
           <div class="package-detail-box-buttons">
-            <div class="button-primary-cta button-small">
-              Book Now
-            </div>
-            <div class="button-secondary-cta">
-              Mark as completed
-            </div>
+            <div *ngIf="!hotelBooked; then bookButtonHotel else doneButtonHotel"></div>
+            <ng-template #bookButtonHotel>
+              <div class="button-primary-cta button-small">
+                Book Now
+              </div>
+              <div (click)="toggleHotelBooked()" class="button-secondary-cta">
+                Mark as completed
+              </div>
+            </ng-template>
+            <ng-template #doneButtonHotel>
+              <div class="button-primary-cta button-small button-done">
+                Done
+              </div>
+              <div (click)="toggleHotelBooked()" class="button-secondary-cta">
+                Mark as uncompleted
+              </div>
+            </ng-template>
           </div>
         </div>
       </div>
@@ -127,20 +149,20 @@
         </div>
         <div class="package-detail-box-booking-container">
           <div class="package-detail-box-buttons">
-            <div *ngIf="!tripBooked; then bookButton else doneButton"></div>
-            <ng-template #bookButton>
+            <div *ngIf="!tripBooked; then bookButtonTrip else doneButtonTrip"></div>
+            <ng-template #bookButtonTrip>
               <div class="button-primary-cta button-small">
                 Book Now
               </div>
-              <div class="button-secondary-cta">
+              <div (click)="toggleTripBooked()" class="button-secondary-cta">
                 Mark as completed
               </div>
             </ng-template>
-            <ng-template #doneButton>
+            <ng-template #doneButtonTrip>
               <div class="button-primary-cta button-small button-done">
                 Done
               </div>
-              <div class="button-secondary-cta">
+              <div (click)="toggleTripBooked()" class="button-secondary-cta">
                 Mark as uncompleted
               </div>
             </ng-template>
