@@ -17,5 +17,135 @@
           500€
         </div>
       </div>
+      <div class="package-detail-box">
+        <div class="package-detail-box-header">
+          <div class="package-detail-box-title">
+            The Event
+          </div>
+          <div class="package-detail-box-price">
+            500€
+          </div>
+        </div>
+        <div class="package-detail-box-content">
+          <div class="package-detail-event-image">
+            <img src="http://s1.evcdn.com/images/block/I0-001/015/001/088-6.jpeg_/imagine-dragons-88.jpeg">
+          </div>
+          <div class="package-detail-event-venue-info">
+            <div class="package-detail-event-venue-name">
+              Anfiteatro Arena di Verona
+            </div>
+            <div class="package-detail-event-city">
+              Verona, Italy
+            </div>
+          </div>
+        </div>
+        <div class="package-detail-box-booking-container">
+          <div class="package-detail-box-buttons">
+            <div class="button-primary-cta button-small">
+              Book Now
+            </div>
+            <div class="button-secondary-cta">
+              Mark as completed
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="package-detail-box package-detail-hotel-info-container">
+        <div class="package-detail-box-header">
+          <div class="package-detail-box-title">
+            Your Hotel
+          </div>
+          <div class="package-detail-box-price">
+            60€
+          </div>
+        </div>
+        <div class="package-detail-box-content">
+          <div class="package-detail-hotel-image">
+            <img src="https://s-ec.bstatic.com/images/hotel/square200/268/26807824.jpg">
+          </div>
+          <div class="package-detail-hotel-info">
+            <div class="package-detail-hotel-name">
+              Novo Hotel Rossi
+            </div>
+          </div>
+        </div>
+        <div class="package-detail-box-booking-container">
+          <div class="package-detail-box-buttons">
+            <div class="button-primary-cta button-small">
+              Book Now
+            </div>
+            <div class="button-secondary-cta">
+              Mark as completed
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="package-detail-box package-detail-trip-info-container">
+        <div class="package-detail-box-header">
+          <div class="package-detail-box-title">
+            Your Trip
+          </div>
+          <div class="package-detail-box-price">
+            170€
+          </div>
+        </div>
+        <div class="package-detail-box-content package-detail-box-schedule-content">
+          <div class="package-detail-box-trip-schedule-container">
+            <div class="package-detail-box-trip-time-container">
+              <div class="package-detail-box-trip-date">
+                July 10, 2017
+              </div>
+              <div class="package-detail-box-trip-times">
+                9:55 PM - 10:55 PM
+              </div>
+            </div>
+            <div class="package-detail-box-trip-stops">
+              Munich (MUC) - Verona (VRN)
+            </div>
+            <div class="package-detail-box-trip-provider">
+              Lufthansa
+            </div>
+          </div>
+          <div class="package-detail-box-trip-schedule-container">
+            <div class="package-detail-box-trip-time-container">
+              <div class="package-detail-box-trip-date">
+                July 11, 2017
+              </div>
+              <div class="package-detail-box-trip-times">
+                12:05 PM - 11:00 PM
+              </div>
+            </div>
+            <div class="package-detail-box-trip-stops">
+              Verona (VRN) - Munich (MUC)
+            </div>
+            <div class="package-detail-box-trip-provider">
+              Lufthansa
+            </div>
+          </div>
+        </div>
+        <div class="package-detail-box-booking-container">
+          <div class="package-detail-box-buttons">
+            <div *ngIf="!tripBooked; then bookButton else doneButton"></div>
+            <ng-template #bookButton>
+              <div class="button-primary-cta button-small">
+                Book Now
+              </div>
+              <div class="button-secondary-cta">
+                Mark as completed
+              </div>
+            </ng-template>
+            <ng-template #doneButton>
+              <div class="button-primary-cta button-small button-done">
+                Done
+              </div>
+              <div class="button-secondary-cta">
+                Mark as uncompleted
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
     </div>
 </div>

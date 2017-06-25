@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./package-detail.component.css']
 })
 export class PackageDetailComponent implements OnInit {
-
-  constructor() { }
+  tripBooked = false;
+  
+  constructor() {}
 
   ngOnInit() {
   }
 
+  toggleTripBooked () {
+    this.tripBooked = !this.tripBooked;
+  }
 }
