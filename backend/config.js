@@ -15,6 +15,10 @@ module.exports = {
     CLIENT_ID: 'aceb81be23b746b9a2f911d2808cc295',
     CLIENT_SECRET: '797405dc59964a2e928821112e488ca1'
   },
+  booking: {
+    username: 'b_munich_hackers17',
+    password: 'f7u@9prYLjCZq,w]2Gd['
+  },
   eventful: {
     APP_KEY: 'SP9tf2zGSWKS2rNH'
   },
