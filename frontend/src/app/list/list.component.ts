@@ -28,6 +28,7 @@ export class ListComponent {
             concert.startDate = moment(concert.start_time).format('MMMM DD, YYYY');
             concert.endDate = moment(concert.end_time).format('MMMM DD, YYYY');
             concert.startTime = moment(concert.start_time).format('HH:mm');
+            concert.image = artist.image.medium.url;
             return concert;
           });
 
