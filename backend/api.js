@@ -97,6 +97,16 @@ function getConcerts() {
   });
 }
 
+// get list of spotify artists
+router.get('/api/artists', (req, res) => {
+  res.json([]).end();
+});
+
+// return estimated price for bundle = concert + transport + booking
+router.get('/api/artists/:id/concerts', (req, res) => {
+  res.json([]).end();
+});
+
 router.get('/api/offers', ensureAuthenticated, (req, res) => {
   spotifyApi.setAccessToken(req.user.spotifyAccessToken);
 
