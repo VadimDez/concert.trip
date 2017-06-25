@@ -24,12 +24,12 @@ export class ListComponent {
         this.concerts = res.json()
          // .sort((a, b) => { return a.price - b.price; })
          // .filter((concert) => { return concert.price; })
-         .map((concert) => {
-            concert.startDate = moment(concert.start_time).format('MMMM DD, YYYY');
-            concert.endDate = moment(concert.end_time).format('MMMM DD, YYYY');
-            concert.startTime = moment(concert.start_time).format('HH:mm');
-            return concert;
-          });
+         .map((data) => {
+           data.concert.startDate = moment(data.concert.start_time).format('MMMM DD, YYYY');
+           data.endDate = moment(data.concert.end_time).format('MMMM DD, YYYY');
+           data.startTime = moment(data.concert.start_time).format('HH:mm');
+           return data;
+         });
 
         this.isLoading = false;
       }, () => {
