@@ -18,17 +18,30 @@ class Eventful {
     return p;
   }
 
-  search_performers(params, callback) {
-    request(this.build_path('performers/search') + this.build_params(params), callback);
+  search_performers(params) {
+    return this.wrap_return(this.build_path('performers/search') + this.build_params(params));
   }
 
   get_performer_events(params, callback) {
-    request(this.build_path('performers/events/list') + this.build_params(params), callback);
+    return this.wrap_return(this.build_path('performers/events/list') + this.build_params(params));
   }
 
   get_event(params, callback) {
-    request(this.build_path('events/get') + this.build_params(params), callback);
+    return this.wrap_return(this.build_path('events/get') + this.build_params(params));
+  }
+
+  wrap_return(request_url) {
+    return new Promise((resolve, reject) => {
+      request(request_url, (error, response, body) => {
+        const json = JSON.parse(body);
+        if (!error && response.statusCode == 200) {
+          resolve(json);
+        } else {
+          reject(error);
+        }
+      });
+    });
   }
 }
 
-module.exports.Eventful = Eventful;
+module.exports = Eventful;
