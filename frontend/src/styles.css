@@ -9,6 +9,10 @@ body {
   font-family: Jaapokki, Arial;
 }
 
+a {
+  text-decoration: none;
+}
+
 div {
   box-sizing: border-box;
 }

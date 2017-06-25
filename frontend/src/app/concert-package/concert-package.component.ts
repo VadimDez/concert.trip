@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { PackageService } from '../package.service';
 
 @Component({
   selector: 'app-concert-package',
@@ -10,7 +11,7 @@ export class ConcertPackageComponent implements OnInit {
   isHotelRequired: boolean;
   hotelName: string;
 
-  constructor() {}
+  constructor(private packageService: PackageService) {}
 
   ngOnInit() {
     this.getHotelName();
@@ -19,9 +20,11 @@ export class ConcertPackageComponent implements OnInit {
   getPrice() {
     console.log(this.concertData);
 
-    return this.concertData.concert.price
+    this.concertData.totalPrice = parseInt(this.concertData.concert.price)
       + parseInt(this.getBookingPrice(), 10)
       + parseInt(this.getTransportPrice(), 10);
+      
+    return this.concertData.totalPrice;
   }
 
   getTransportPrice() {
@@ -46,5 +49,9 @@ export class ConcertPackageComponent implements OnInit {
     const time = this.concertData.transport.duration;
 
     return `${ Math.floor(time / 60) }h ${ Math.floor(time % 60) } m`;
+  }
+  
+  onSelectPackage () {
+    this.packageService.selectPackage(this.concertData);
   }
 }
