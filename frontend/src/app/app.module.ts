@@ -20,7 +20,6 @@ import { MainComponent } from './main/main.component';
 import { CookieModule } from 'ngx-cookie';
 import { PackageDetailComponent } from './package-detail/package-detail.component';
 import { ApiService } from './services/api.service';
-import { AuthenticatedHttpService } from './http.interceptor';
 
 @NgModule({
   declarations: [
