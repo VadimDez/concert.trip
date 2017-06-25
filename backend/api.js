@@ -58,6 +58,8 @@ router.get('/api/getOffers', (req, res) => {
               return Promise.all(performer_events.event.map(p_event => {
                 return eventfulApi.get_event({ id: p_event.id }).then(event_details => {
                   if (event_details.price) {
+                    let default_end_time = new Date(event_details.start_time);
+                    default_end_time.setHours(default_end_time.getHours() + 8);
                     let event_offer = {
                       trip: {},
                       accommodation: {},
@@ -67,6 +69,8 @@ router.get('/api/getOffers', (req, res) => {
                         address: event_details.address,
                         city: event_details.city,
                         country: event_details.country,
+                        start_time: event_details.start_time,
+                        end_time: event_details.end_time || default_end_time,
                         price: eventfulApi.parsePrice(event_details.price),
                         tickets_url: eventfulApi.getTicketURL(event_details)
                       }
