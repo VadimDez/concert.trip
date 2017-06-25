@@ -11,8 +11,10 @@ const mongoose = require('mongoose');
 const mongoStore = connectMongo(session);
 const passport = require('passport');
 const SpotifyStrategy = require('passport-spotify').Strategy;
-const User = require('./models/user');
+const cors = require('cors');
 
+
+const User = require('./models/user');
 const config = require('./config');
 
 module.exports = (app) => {
@@ -59,10 +61,12 @@ module.exports = (app) => {
     })
   }));
 
-  app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
+  app.use(cors({
+    origin: function(origin, callback){
+      const isWhitelisted = ['http://localhost:4200'].indexOf(origin) !== -1;
+      callback(null, isWhitelisted);
+    },
+    credentials: true
+  }));
 
 };
