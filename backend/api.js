@@ -78,7 +78,11 @@ router.get('/api/getOffers', (req, res) => {
                     return event_offer;
                   }
                 });
-              })).then(event_offers => {
+              })).then(p_events => {
+                return p_events.filter(p_event => {
+                  return p_event !== undefined;
+                });
+              }).then(event_offers => {
                 artist_offer.offers = event_offers;
                 return artist_offer;
               });
@@ -86,7 +90,11 @@ router.get('/api/getOffers', (req, res) => {
           });
         }
       });
-    }));
+    })).then(offers => {
+      return offers.filter(offer => {
+        return offer !== undefined;
+      });
+    });
   }).then((offers) => {
     res.status(200).json(offers);
   });
