@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-concert-package',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./concert-package.component.css']
 })
 export class ConcertPackageComponent implements OnInit {
-
+  @Input() concertData: Object;
   constructor() { }
 
   ngOnInit() {

@@ -8,24 +8,24 @@
       <div class="concert-package-detail-container">
         <div class="concert-package-date-detail-container">
           <div class="concert-package-event-date">
-            July 10, 2017
+            {{concertData.startDate}}
           </div>
           <div class="concert-package-event-time">
-            21.00
+            {{concertData.startTime}}
           </div>
         </div>
         <div class="concert-package-total-price">
-          500€
+          {{concertData.price}}€
         </div>
       </div>
       <div class="concert-package-artist-name">
-        Imagine Dragons
+        {{concertData.title}}
       </div>
       <div class="concert-package-venue-info">
-        Anfiteatro Arena di Verona
+        {{concertData.venue_name}}
       </div>
       <div class="concert-package-event-city">
-        Verona, Italy
+        {{concertData.city}}, {{concertData.country}}
       </div>
     </div>
   </div>
