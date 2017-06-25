@@ -8,8 +8,11 @@ const server = require('http').Server(app);
 const chalk = require('chalk');
 const mongoose = require('mongoose');
 const Promise = require('bluebird');
+const apicache = require('apicache');
 
 const config = require('./config');
+let cache = apicache.middleware;
+app.use(cache('5 minutes'));
 
 mongoose.Promise = Promise;
 Promise.promisifyAll(mongoose);
