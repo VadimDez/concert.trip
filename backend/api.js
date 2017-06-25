@@ -56,6 +56,12 @@ function getArtists() {
           }
         });
       })).then(artists => {
+        console.log(chalk.red('artists'));
+        console.log(chalk.red(artists));
+        if (!artists) {
+          return null;
+        }
+
         return artists.filter(artist => {
           return artist !== undefined;
         })
